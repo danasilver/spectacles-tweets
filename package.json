@@ -1,0 +1,21 @@
+{
+  "name": "spectacles-tweets",
+  "version": "1.0.0",
+  "description": "Spectacles tweets.",
+  "main": "index.js",
+  "scripts": {
+    "create-index": "DEBUG=* node create-index.js",
+    "download": "DEBUG=* node .",
+    "start-db": "mongod --dbpath=db --port=27017",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dana Silver <dsilver1221@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "debug": "^2.3.3",
+    "lodash": "^4.16.6",
+    "mongodb": "^2.2.11",
+    "twitter": "^1.4.0"
+  }
+}
