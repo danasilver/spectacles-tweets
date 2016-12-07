@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const mongodb = require('mongodb');
 const debug = require('debug')('download-tweets');
 const Promise = require('bluebird');
@@ -19,21 +17,9 @@ let twitter = new Twitter({
 
 twitter = Promise.promisifyAll(twitter);
 
-const backfillTweets = () => {
-  debug('Beginning to backfill tweets.');
-  mostRecentTweets()
-    .tap(saveTweets)
-    .then(tweets => {
-      return promiseFor(
-        t => t.length > 1,
-        t => tweetsUntilLastTweet(t).tap(saveTweets),
-        tweets);
-    });
-};
-
 const promiseFor = Promise.method((condition, fn, value) => {
   if (!condition(value)) return value;
-  fn(value).then(promiseFor.bind(this, condition, fn));
+  return fn(value).then(promiseFor.bind(this, condition, fn));
 });
 
 const mostRecentTweets = () => {
@@ -94,4 +80,9 @@ const format = tweet => {
   return tweet;
 };
 
-backfillTweets();
+module.exports = {
+  mostRecentTweets,
+  saveTweets,
+  tweetsUntilLastTweet,
+  promiseFor,
+};

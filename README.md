@@ -24,5 +24,5 @@ npm run create-index
 #### Backfill Tweets
 
 ```
-npm run download
+npm run backfill
 ```
