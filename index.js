@@ -70,7 +70,7 @@ const saveTweets = tweets => {
       .toArray();
   })
   .then(existing => {
-    newTweets = tweets.filter(t => {
+    const newTweets = tweets.filter(t => {
       const existingIds = existing.map(e => e.id_str);
       return existingIds.indexOf(t.id_str) === -1;
     });
