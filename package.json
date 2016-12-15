@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "create-index": "DEBUG=* node create-index.js",
+    "update": "DEBUG=* node update-tweets.js",
     "backfill": "DEBUG=* node backfill-tweets.js",
     "start-db": "mongod --dbpath=db --port=27017",
     "test": "echo \"Error: no test specified\" && exit 1"

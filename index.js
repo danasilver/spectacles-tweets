@@ -29,6 +29,7 @@ const mostRecentTweets = () => {
 };
 
 const tweetsSince = sinceId => {
+  debug('Downloading tweets with since_id %s.', sinceId);
   const params = {screen_name: 'Spectacles', count: 200, since_id: sinceId};
   return twitter.getAsync('statuses/user_timeline', params);
 };
@@ -40,11 +41,20 @@ const tweetsUntil = maxId => {
 };
 
 const tweetsUntilLastTweet = tweets => {
-  return tweetsUntil(_.last(tweets).id);
+  return tweetsUntil(_.last(tweets).id_str);
 };
+
+const tweetsSinceFirstTweet = tweets => {
+  return tweetsSince(_.first(tweets).id_str);
+}
 
 const saveTweets = tweets => {
   let db;
+
+  if (!tweets.length) {
+    debug('No tweets to insert.');
+    return Promise.resolve();
+  }
 
   tweets = tweets.map(format);
 
@@ -80,9 +90,32 @@ const format = tweet => {
   return tweet;
 };
 
+const lastSavedTweet = () => {
+  let db;
+
+
+  return Promise.promisify(MongoClient.connect)(url)
+  .then(_db => {
+    db = _db;
+    return db.collection('tweets')
+      .find()
+      .sort({created_at: -1})
+      .limit(1)
+      .toArray();
+  })
+  .catch(err => {
+    throw new Error(err);
+  })
+  .finally(() => {
+    return db.close();
+  });
+};
+
 module.exports = {
   mostRecentTweets,
   saveTweets,
   tweetsUntilLastTweet,
   promiseFor,
+  lastSavedTweet,
+  tweetsSinceFirstTweet,
 };
