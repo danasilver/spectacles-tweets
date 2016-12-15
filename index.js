@@ -93,7 +93,6 @@ const format = tweet => {
 const lastSavedTweet = () => {
   let db;
 
-
   return Promise.promisify(MongoClient.connect)(url)
   .then(_db => {
     db = _db;
