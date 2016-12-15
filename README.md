@@ -26,3 +26,9 @@ npm run create-index
 ```
 npm run backfill
 ```
+
+#### Update Tweets
+
+```
+npm run update
+```
