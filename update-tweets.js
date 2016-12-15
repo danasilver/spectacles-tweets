@@ -3,12 +3,8 @@
 require('dotenv').config();
 
 const debug = require('debug')('update-tweets');
-const {
-  saveTweets,
-  promiseFor,
-  lastSavedTweet,
-  tweetsSinceFirstTweet,
-} = require('.');
+const {promiseFor, tweetsSinceFirstTweet} = require('.');
+const {saveTweets, lastSavedTweet} = require('./backends/mongodb');
 
 debug('Beginning to update tweets.');
 

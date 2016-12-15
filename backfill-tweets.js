@@ -5,10 +5,10 @@ require('dotenv').config();
 const debug = require('debug')('backfill-tweets');
 const {
   mostRecentTweets,
-  saveTweets,
   tweetsUntilLastTweet,
   promiseFor,
 } = require('.');
+const {saveTweets} = require('./backends/mongodb');
 
 debug('Beginning to backfill Tweets.');
 
